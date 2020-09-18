@@ -4,6 +4,7 @@ import (
 	"encoding/xml"
 	"io"
 	"net/http"
+	"os"
 )
 
 type Link struct {
@@ -56,6 +57,22 @@ func parseFeed(feed []byte) (Feed, error) {
 	}
 
 	return f, nil
+}
+
+func readFile(f *os.File) ([]byte, error) {
+	bs, chunk := make([]byte, 0), make([]byte, 10)
+	for {
+		n, err := f.Read(chunk)
+		if err != nil && err != io.EOF {
+			return bs, err
+		}
+		bs = append(bs, chunk[0:n]...)
+
+		if err == io.EOF {
+			break
+		}
+	}
+	return bs, nil
 }
 
 func main() {}
