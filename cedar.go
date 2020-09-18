@@ -1,10 +1,12 @@
 package main
 
 import (
+	"encoding/json"
 	"encoding/xml"
 	"io"
 	"net/http"
 	"os"
+	"path"
 )
 
 type Link struct {
@@ -23,6 +25,8 @@ type Feed struct {
 	XMLName xml.Name `xml:"feed"`
 	Entry   []Entry  `xml:"entry"`
 }
+
+type Ids []string
 
 func newsFeed() ([]byte, error) {
 	// Init feed.
@@ -73,6 +77,34 @@ func readFile(f *os.File) ([]byte, error) {
 		}
 	}
 	return bs, nil
+}
+
+func cacheFor(section string) (Ids, error) {
+	cache := make(Ids, 0)
+
+	h, _ := os.UserHomeDir()
+	d := path.Join(h, ".cedar")
+
+	err := os.MkdirAll(d, 0700)
+	if err != nil {
+		return cache, err
+	}
+
+	f, err := os.Open(path.Join(d, section+".json"))
+	if os.IsNotExist(err) {
+		return cache, nil
+	}
+
+	bs, err := readFile(f)
+	if err != nil {
+		return cache, err
+	}
+
+	err = json.Unmarshal(bs, &cache)
+	if err != nil {
+		return cache, err
+	}
+	return cache, nil
 }
 
 func main() {}
