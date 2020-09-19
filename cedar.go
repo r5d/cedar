@@ -183,10 +183,6 @@ func processNews() error {
 		return err
 	}
 
-	if len(news.Entry) < 1 {
-		return nil
-	}
-
 	for i := 0; i < len(news.Entry); i++ {
 		if news.Entry[i].in(cache) {
 			continue
