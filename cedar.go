@@ -120,8 +120,22 @@ func (cache *Ids) add(entry Entry) {
 	*cache = c
 }
 
-func (cache Ids) save() error {
-	// Dummy for now.
+func (cache Ids) save(section string) error {
+	h, _ := os.UserHomeDir()
+	d := path.Join(h, ".cedar")
+
+	f, err := os.OpenFile(path.Join(d, section+".json"),
+		os.O_CREATE|os.O_WRONLY,
+		0600)
+	if err != nil {
+		return err
+	}
+
+	err = writeFile(*f, cache)
+	if err != nil {
+		return err
+	}
+
 	return nil
 }
 
@@ -170,7 +184,10 @@ func processNews() error {
 			cache.add(news.Entry[i])
 		}
 	}
-	cache.save()
+	err = cache.save("news")
+	if err != nil {
+		return err
+	}
 
 	return nil
 }
