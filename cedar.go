@@ -107,4 +107,17 @@ func cacheFor(section string) (Ids, error) {
 	return cache, nil
 }
 
+func (cache *Ids) add(entry Entry) {
+	n := len(*cache)
+
+	// Expand cache
+	c := make(Ids, n+1)
+	copy(c, *cache)
+
+	// Cache entry
+	c[n] = entry.Id
+
+	*cache = c
+}
+
 func main() {}
