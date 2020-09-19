@@ -79,6 +79,19 @@ func readFile(f *os.File) ([]byte, error) {
 	return bs, nil
 }
 
+func writeFile(f os.File, cache Ids) error {
+	bs, err := json.Marshal(cache)
+	if err != nil {
+		return err
+	}
+
+	n, err := f.Write(bs)
+	if n != len(bs) {
+		return err
+	}
+	return nil
+}
+
 func cacheFor(section string) (Ids, error) {
 	cache := make(Ids, 0)
 
