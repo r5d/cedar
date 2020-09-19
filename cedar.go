@@ -134,4 +134,10 @@ func (entry Entry) in(cache Ids) bool {
 	return false
 }
 
+func (entry Entry) email() error {
+	// Dummy for now.
+	fmt.Printf("Mailing %v...\n", entry.Id)
+	return nil
+}
+
 func main() {}
