@@ -4,10 +4,13 @@ import (
 	"encoding/json"
 	"encoding/xml"
 	"flag"
+	"fmt"
 	"io"
 	"net/http"
 	"os"
+	"os/exec"
 	"path"
+	"strings"
 )
 
 type Link struct {
@@ -28,6 +31,8 @@ type Feed struct {
 }
 
 type Ids []string
+
+const sendmail string = "/usr/sbin/sendmail"
 
 func init() {
 	var emailTo string
@@ -167,9 +172,39 @@ func (entry Entry) in(cache Ids) bool {
 	return false
 }
 
-func (entry Entry) email() error {
-	// Dummy for now.
-	fmt.Printf("Mailing %v...\n", entry.Id)
+func (entry Entry) makeEmail(section string) string {
+	return fmt.Sprintf(`To: %s
+Subject: FSF India - %s - %s
+
+FSF India published "%s":
+
+   %s
+`,
+		emailTo,
+		strings.Title(section),
+		entry.Title,
+		entry.Title,
+		entry.Link.Href)
+}
+
+func (entry Entry) email(section string) error {
+	cmd := exec.Command(sendmail, "-t")
+
+	stdin, err := cmd.StdinPipe()
+	if err != nil {
+		return err
+	}
+
+	io.WriteString(stdin, entry.makeEmail(section))
+	stdin.Close()
+
+	_, err = cmd.CombinedOutput()
+	if err != nil {
+		return err
+	}
+	fmt.Printf("Successfully sent %s to %s\n",
+		entry.Id, emailTo)
+
 	return nil
 }
 
@@ -194,10 +229,11 @@ func processNews() error {
 			continue
 		}
 
-		err := news.Entry[i].email()
-		if err == nil {
-			cache.add(news.Entry[i])
+		err := news.Entry[i].email("news")
+		if err != nil {
+			return err
 		}
+		cache.add(news.Entry[i])
 	}
 	err = cache.save("news")
 	if err != nil {
