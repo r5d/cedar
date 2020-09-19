@@ -120,4 +120,9 @@ func (cache *Ids) add(entry Entry) {
 	*cache = c
 }
 
+func (cache Ids) save() error {
+	// Dummy for now.
+	return nil
+}
+
 func main() {}
