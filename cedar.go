@@ -140,4 +140,39 @@ func (entry Entry) email() error {
 	return nil
 }
 
+func processNews() error {
+	newsXML, err := newsFeed()
+	if err != nil {
+		return err
+	}
+
+	news, err := parseFeed(newsXML)
+	if err != nil {
+		return err
+	}
+
+	cache, err := cacheFor("news")
+	if err != nil {
+		return err
+	}
+
+	if len(news.Entry) < 1 {
+		return nil
+	}
+
+	for i := 0; i < len(news.Entry); i++ {
+		if news.Entry[i].in(cache) {
+			continue
+		}
+
+		err := news.Entry[i].email()
+		if err == nil {
+			cache.add(news.Entry[i])
+		}
+	}
+	cache.save()
+
+	return nil
+}
+
 func main() {}
