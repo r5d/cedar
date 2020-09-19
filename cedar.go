@@ -252,4 +252,9 @@ func main() {
 		flag.PrintDefaults()
 		return
 	}
+
+	err := processNews()
+	if err != nil {
+		fmt.Printf("Error: %v\n", err.Error())
+	}
 }
