@@ -1,3 +1,6 @@
+// SPDX-License-Identifier: ISC
+// Copyright © 2020 rsiddharth <rsiddharth@ninthfloor.org>
+
 package main
 
 import (
