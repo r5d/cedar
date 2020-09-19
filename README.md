@@ -1,6 +1,6 @@
 # cedar
 
-Emails FSF India news feed to fsf-discuss mailling list.
+Emails FSF India news feed to fsf-discuss mailing list.
 
 ## building
 
