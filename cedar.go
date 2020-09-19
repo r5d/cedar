@@ -178,6 +178,7 @@ func (entry Entry) in(cache Ids) bool {
 
 func (entry Entry) makeEmail(section string) string {
 	return fmt.Sprintf(`To: %s
+From: no-reply@gnu.org.in
 Subject: FSF India - %s - %s
 
 FSF India published "%s":
