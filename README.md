@@ -6,10 +6,9 @@ Emails FSF India news feed to fsf-discuss mailling list.
 
 Requires `make` and `go >= 1.11`
 
-Just do:
+To build it, just do:
 
 ```
 make
 ```
 
-to build it.
