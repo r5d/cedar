@@ -34,8 +34,9 @@ type Ids []string
 
 const sendmail string = "/usr/sbin/sendmail"
 
+var emailTo string
+
 func init() {
-	var emailTo string
 	flag.StringVar(&emailTo, "t", "", "Email address for sending emails to")
 }
 
