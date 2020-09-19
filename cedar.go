@@ -110,7 +110,7 @@ func writeFile(f os.File, cache Ids) error {
 func cacheFor(section string) (Ids, error) {
 	cache := make(Ids, 0)
 
-	h, _ := os.UserHomeDir()
+	h := os.Getenv("HOME")
 	d := path.Join(h, ".cedar")
 
 	err := os.MkdirAll(d, 0700)
