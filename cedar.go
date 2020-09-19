@@ -149,7 +149,7 @@ func (cache *Ids) add(entry Entry) {
 }
 
 func (cache Ids) save(section string) error {
-	h, _ := os.UserHomeDir()
+	h := os.Getenv("HOME")
 	d := path.Join(h, ".cedar")
 
 	f, err := os.OpenFile(path.Join(d, section+".json"),
