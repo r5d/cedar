@@ -125,4 +125,13 @@ func (cache Ids) save() error {
 	return nil
 }
 
+func (entry Entry) in(cache Ids) bool {
+	for i := 0; i < len(cache); i++ {
+		if entry.Id == cache[i] {
+			return true
+		}
+	}
+	return false
+}
+
 func main() {}
