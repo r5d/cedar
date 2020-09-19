@@ -1,6 +1,8 @@
 # cedar
 
-Emails FSF India news feed to fsf-discuss mailing list.
+Emails FSF India news feed to [fsf-discuss][1] mailing list.
+
+[1]: https://lists.fsci.in/postorius/lists/fsf-discuss.mm.gnu.org.in
 
 ## building
 
