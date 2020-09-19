@@ -109,7 +109,7 @@ func cacheFor(section string) (Ids, error) {
 	}
 
 	bs, err := readFile(f)
-	if err != nil {
+	if len(bs) == 0 || err != nil {
 		return cache, err
 	}
 
