@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: ISC
-// Copyright © 2020 rsiddharth <rsiddharth@ninthfloor.org>
+// Copyright © 2020 rsiddharth <s@ricketyspace.net>
 
 package main
 
