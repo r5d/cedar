@@ -3,6 +3,7 @@ package main
 import (
 	"encoding/json"
 	"encoding/xml"
+	"flag"
 	"io"
 	"net/http"
 	"os"
@@ -27,6 +28,11 @@ type Feed struct {
 }
 
 type Ids []string
+
+func init() {
+	var emailTo string
+	flag.StringVar(&emailTo, "t", "", "Email address for sending emails to")
+}
 
 func newsFeed() ([]byte, error) {
 	// Init feed.
@@ -201,4 +207,12 @@ func processNews() error {
 	return nil
 }
 
-func main() {}
+func main() {
+	flag.Parse()
+
+	// Quit if emailTo is not set.
+	if flag.NFlag() != 1 {
+		flag.PrintDefaults()
+		return
+	}
+}
