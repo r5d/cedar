@@ -251,7 +251,7 @@ func processNews() error {
 func main() {
 	flag.Parse()
 
-	// Quit if emailTo is not set.
+	// Quit if 'to' is not set.
 	if flag.NFlag() != 1 {
 		flag.PrintDefaults()
 		return
